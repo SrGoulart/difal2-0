@@ -35,3 +35,26 @@ div[data-testid="stForm"] {
     max-width: 900px;
     margin: 0 auto;
 }
+
+/* Corrige inputs, radio buttons, selects etc. no modo claro */
+
+input, select, textarea {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid #ccc !important;
+}
+
+div[data-baseweb="radio"] label {
+    color: #000000 !important;
+}
+
+button[kind="primary"] {
+    background-color: #0d134c !important;
+    color: #ffffff !important;
+    border: none !important;
+}
+
+button[kind="primary"]:hover {
+    background-color: #172171 !important;
+}
+
