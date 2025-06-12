@@ -1,16 +1,16 @@
-/* Corpo geral e fontes */
-body {
-    font-family: 'Arial', sans-serif;
+/* === Base === */
+body, .stApp {
     background-color: #ffffff;
     color: #000000;
+    font-family: 'Arial', sans-serif;
 }
 
-/* Títulos */
-h1, h2, h3, h4 {
-    color: #0d134c;
+/* === Títulos === */
+h1, h2, h3, h4, label {
+    color: #0d134c !important;
 }
 
-/* Formulário */
+/* === Formulário (container) === */
 div[data-testid="stForm"] {
     background-color: #f7f9fc;
     border-radius: 16px;
@@ -18,7 +18,7 @@ div[data-testid="stForm"] {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
-/* Inputs (campos de texto e número) */
+/* === Inputs === */
 input, select, textarea {
     background-color: #ffffff !important;
     color: #000000 !important;
@@ -27,12 +27,43 @@ input, select, textarea {
     padding: 0.5rem !important;
 }
 
-/* Radio buttons */
-div[data-baseweb="radio"] label {
+/* === Remove spinners dos number inputs === */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* === Selectbox (estado) === */
+div[data-baseweb="select"] {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-radius: 8px !important;
+    border: 1px solid #ccc !important;
+}
+div[data-baseweb="select"] * {
     color: #000000 !important;
 }
 
-/* Botão principal */
+/* === Radio buttons === */
+.stRadio > label, .stRadio label {
+    color: #0d134c !important;
+    font-weight: 600;
+}
+.stRadio div[role="radiogroup"] {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+.stRadio div[role="radiogroup"] label {
+    background: none !important;
+    padding-left: 4px;
+}
+
+/* === Botão primário === */
 button[kind="primary"] {
     background-color: #0d134c !important;
     color: #ffffff !important;
@@ -41,19 +72,17 @@ button[kind="primary"] {
     font-weight: bold;
     transition: 0.2s ease-in-out;
 }
-
 button[kind="primary"]:hover {
     background-color: #17217a !important;
     transform: scale(1.01);
 }
 
-/* Centralização de container */
+/* === Resultado (após cálculo) === */
 .centered-box {
     max-width: 900px;
     margin: 0 auto;
 }
 
-/* Resultado */
 .centered-result {
     max-width: 700px;
     margin: 2rem auto;
@@ -64,4 +93,3 @@ button[kind="primary"]:hover {
     font-weight: 500;
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
-
