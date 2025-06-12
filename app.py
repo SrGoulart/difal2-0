@@ -15,15 +15,6 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-st.markdown("""
-    <style>
-        body, .stApp {
-            background-color: white !important;
-            color: black !important;
-        }
-    </style>
-""", unsafe_allow_html=True)
-
 import base64
 
 def get_logo_base64(path):
