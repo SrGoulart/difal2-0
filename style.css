@@ -1,6 +1,7 @@
-
 body {
     font-family: 'Arial', sans-serif;
+    background-color: #ffffff;
+    color: #000000;
 }
 
 h1, h2, h3, h4 {
@@ -25,6 +26,9 @@ div[data-testid="stForm"] {
     background-color: #f5f5f5;
     padding: 1.5rem;
     border-radius: 10px;
+    color: #0d134c;
+    font-weight: 500;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
 }
 
 .centered-box {
