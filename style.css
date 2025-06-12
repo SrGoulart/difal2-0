@@ -88,3 +88,39 @@ button, input, select, textarea {
 .stRadio {
     margin-bottom: 1rem;
 }
+
+/* Corrige fundo escuro do selectbox */
+.stSelectbox div[data-baseweb="select"] {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-radius: 8px !important;
+}
+
+/* Remove os botões de incremento/decremento dos inputs numéricos */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Garante visibilidade dos textos nos radio buttons */
+.stRadio > div {
+    color: #000000 !important;
+    font-weight: 500;
+}
+
+.stRadio label {
+    color: #000000 !important;
+}
+
+/* Cor personalizada para botão de radio selecionado */
+input[type="radio"]:checked + div {
+    border-color: #dd303e !important;
+    background-color: #ffe9ec !important;
+}
+
+
