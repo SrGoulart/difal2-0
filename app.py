@@ -21,17 +21,14 @@ st.markdown("""
             background-color: white !important;
             color: black !important;
         }
-
         [data-testid="stHeader"] {
             background: white;
         }
-
         [data-testid="stToolbar"] {
             visibility: hidden;
         }
     </style>
 """, unsafe_allow_html=True)
-
 
 import base64
 
@@ -41,19 +38,18 @@ def get_logo_base64(path):
 
 logo_base64 = get_logo_base64("GRAN_colorido_(1).png")
 
-st.markdown(f"""
-    <div style='display: flex; justify-content: space-between; align-items: center;'>
-        <div style='text-align: left;'>
-            <h1 style='color:#0d134c; margin-bottom: 0;'>Simulador de DIFAL</h1>
-            <h4 style='color:#dd303e; margin-top: 0;'>GRAN - Simulação Comparativa de Custos</h4>
+st.markdown(f'''
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="text-align: left;">
+            <h1 style="color:#0d134c; margin-bottom: 0;">Simulador de DIFAL</h1>
+            <h4 style="color:#dd303e; margin-top: 0;">GRAN - Simulação Comparativa de Custos</h4>
         </div>
         <div>
-            <img src="data:image/png;base64,{logo_base64}" width="200">
+            <img src="data:image/png;base64,{logo_base64}" width="180">
         </div>
     </div>
     <hr>
-""", unsafe_allow_html=True)
-
+''', unsafe_allow_html=True)
 
 # Aplica CSS customizado
 with open("style.css") as f:
