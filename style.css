@@ -65,3 +65,26 @@ button[kind="primary"]:hover {
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
 
+/* Labels de campos (como "Produto importado?") */
+label, .stRadio > div > label, .stSelectbox > label, .stTextInput > label {
+    color: #0d134c !important;
+    font-weight: 600;
+}
+
+/* Cor do texto dentro de componentes */
+.stTextInput input, .stNumberInput input, .stSelectbox div, .stRadio label {
+    color: #000000 !important;
+}
+
+/* Corrige botões e inputs escuros herdados */
+button, input, select, textarea {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid #ccc !important;
+    border-radius: 8px !important;
+}
+
+/* Container do radio (margem e espaçamento) */
+.stRadio {
+    margin-bottom: 1rem;
+}
