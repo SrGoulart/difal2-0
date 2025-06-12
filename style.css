@@ -88,39 +88,41 @@ button, input, select, textarea {
 .stRadio {
     margin-bottom: 1rem;
 }
+/* Garante que os textos "Sim" e "Não" fiquem visíveis */
+.stRadio > div {
+    flex-direction: column !important; /* Alinha verticalmente se necessário */
+    gap: 0.3rem;
+}
 
-/* Corrige fundo escuro do selectbox */
-.stSelectbox div[data-baseweb="select"] {
+.stRadio div[role="radiogroup"] label {
+    color: #000000 !important;
+    background: transparent !important;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Selectbox totalmente branco e legível */
+div[data-baseweb="select"] {
     background-color: #ffffff !important;
     color: #000000 !important;
     border-radius: 8px !important;
+    border: 1px solid #ccc !important;
 }
 
-/* Remove os botões de incremento/decremento dos inputs numéricos */
+/* Corrige cor dos textos internos no selectbox */
+div[data-baseweb="select"] * {
+    color: #000000 !important;
+}
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-
 input[type=number] {
     -moz-appearance: textfield;
-}
-
-/* Garante visibilidade dos textos nos radio buttons */
-.stRadio > div {
-    color: #000000 !important;
-    font-weight: 500;
-}
-
-.stRadio label {
-    color: #000000 !important;
-}
-
-/* Cor personalizada para botão de radio selecionado */
-input[type="radio"]:checked + div {
-    border-color: #dd303e !important;
-    background-color: #ffe9ec !important;
 }
 
 
