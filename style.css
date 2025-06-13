@@ -11,14 +11,16 @@ h1, h2, h3, h4, label {
 }
 
 /* === Formulário (container) === */
-div[data-testid="stForm"] {
+.form-container {
+    max-width: 700px; /* Largura reduzida para o formulário */
+    margin: 2rem auto; /* Centraliza o formulário */
     background-color: #f7f9fc;
     border-radius: 16px;
     padding: 2rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
-/* === Inputs === */
+/* === Inputs (text, number, etc.) === */
 input, select, textarea {
     background-color: #ffffff !important;
     color: #000000 !important;
@@ -39,18 +41,19 @@ input[type=number] {
 
 /* === Selectbox (estado) === */
 div[data-baseweb="select"] {
-    background-color: #ffffff !important;
-    color: #000000 !important;
+    background-color: #ffffff !important; /* Fundo claro */
+    color: #000000 !important; /* Texto escuro */
     border-radius: 8px !important;
     border: 1px solid #ccc !important;
 }
+/* Garante que o texto dentro do selectbox seja sempre preto */
 div[data-baseweb="select"] * {
     color: #000000 !important;
 }
 
 /* === Radio buttons === */
 .stRadio > label, .stRadio label {
-    color: #0d134c !important;
+    color: #0d134c !important; /* Cor do título do rádio */
     font-weight: 600;
 }
 .stRadio div[role="radiogroup"] {
@@ -63,35 +66,38 @@ div[data-baseweb="select"] * {
     padding-left: 4px;
 }
 
-/* === Botão primário === */
-button[kind="primary"] {
-    background-color: #ffffff !important;
-    color: #0d134c !important;
+/* Força exibição dos textos Sim / Não e ajusta cor */
+.stRadio div[role="radiogroup"] > div {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px;
+}
+.stRadio div[role="radiogroup"] label span {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: inline !important;
+    color: #000000 !important; /* Texto "Sim" / "Não" em preto */
+    font-weight: 500;
+}
+
+/* === Botão primário (Calcular) === */
+button[data-testid="baseButton-primary"] {
+    background-color: #0d134c !important; /* Fundo escuro */
+    color: #ffffff !important; /* Texto branco */
     border: 2px solid #0d134c !important;
     border-radius: 8px !important;
     font-weight: bold;
     transition: 0.2s ease-in-out;
 }
-button[kind="primary"]:hover {
-    background-color: #0d134c !important;
-    color: #ffffff !important;
-}
-
-}
-button[kind="primary"]:hover {
-    background-color: #17217a !important;
+button[data-testid="baseButton-primary"]:hover {
+    background-color: #17217a !important; /* Levemente mais escuro no hover */
     transform: scale(1.01);
 }
 
 /* === Resultado (após cálculo) === */
-.centered-box {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.centered-result {
-    max-width: 700px;
-    margin: 2rem auto;
+.result-container {
+    max-width: 600px; /* Largura reduzida para a caixa de resultados */
+    margin: 2rem auto; /* Centraliza a caixa de resultados */
     background-color: #f1f5fb;
     padding: 1.5rem;
     border-radius: 12px;
@@ -100,17 +106,29 @@ button[kind="primary"]:hover {
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
 
-/* Força exibição dos textos Sim / Não */
-.stRadio div[role="radiogroup"] > div {
-    display: flex !important;
-    align-items: center !important;
-    gap: 6px;
-}
-
-.stRadio div[role="radiogroup"] label span {
-    visibility: visible !important;
-    opacity: 1 !important;
-    display: inline !important;
-    color: #0d134c !important;
-    font-weight: 500;
+/* === Ajustes Responsivos === */
+@media (max-width: 768px) {
+    /* Ajusta largura do formulário e resultado em telas menores */
+    .form-container, .result-container {
+        max-width: 95% !important;
+        padding: 1rem;
+    }
+    /* Empilha colunas em telas menores */
+    div[data-testid="stForm"] > div > div {
+        flex-direction: column;
+    }
+    /* Empilha botões de rádio em telas menores */
+    .stRadio div[role="radiogroup"] {
+        flex-direction: column;
+    }
+    /* Ajusta tamanho da logo em telas menores */
+    img[width="200"] {
+        width: 150px !important;
+    }
+    h1 {
+        font-size: 2rem !important; /* Reduz tamanho do título principal */
+    }
+    h4 {
+        font-size: 1rem !important; /* Reduz tamanho do subtítulo */
+    }
 }
