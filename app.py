@@ -176,7 +176,3 @@ if submit:
         for chave, valor in resultado.items():
             st.markdown(f"<p style='color:{COR_PRIMARIA}; font-size: 16px; text-align: center; margin-bottom: 0.5rem;'><strong>{chave}:</strong> {valor}</p>", unsafe_allow_html=True)
         st.markdown("</div>", unsafe_allow_html=True)
-
-        for chave, valor in resultado.items():
-            st.markdown(f"<div style='color:{COR_PRIMARIA}; font-size: 16px; text-align: center;'><strong>{chave}:</strong> {valor}</div>", unsafe_allow_html=True)
-        st.markdown("</div>", unsafe_allow_html=True)
