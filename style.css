@@ -42,7 +42,6 @@ input[type=number] {
 /* === Selectbox (estado) === */
 div[data-baseweb="select"] {
     background-color: #ffffff !important; /* Fundo claro */
-    color: #000000 !important; /* Texto escuro */
     border-radius: 8px !important;
     border: 1px solid #ccc !important;
 }
@@ -50,6 +49,16 @@ div[data-baseweb="select"] {
 div[data-baseweb="select"] * {
     color: #000000 !important;
 }
+/* Estilo para a caixa de seleção quando aberta/focada */
+div[data-baseweb="popover"] > div > div {
+    background-color: #ffffff !important; /* Fundo do dropdown em branco */
+    color: #000000 !important; /* Texto do dropdown em preto */
+}
+/* Estilo para as opções do selectbox */
+.stSelectbox .option {
+    color: #000000 !important; /* Garante que o texto das opções seja preto */
+}
+
 
 /* === Radio buttons === */
 .stRadio > label, .stRadio label {
