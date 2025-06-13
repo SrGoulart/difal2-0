@@ -40,8 +40,9 @@ input[type=number] {
 }
 
 /* === Selectbox (estado) === */
-div[data-baseweb="select"] {
-    background-color: #ffffff !important; /* Fundo claro */
+/* Estilo para o contêiner principal do selectbox */
+div[data-baseweb="select"] > div {
+    background-color: #ffffff !important; /* Fundo claro para o campo selecionado */
     border-radius: 8px !important;
     border: 1px solid #ccc !important;
 }
@@ -49,12 +50,12 @@ div[data-baseweb="select"] {
 div[data-baseweb="select"] * {
     color: #000000 !important;
 }
-/* Estilo para a caixa de seleção quando aberta/focada */
+/* Estilo para a caixa de seleção quando aberta/focada (o popover) */
 div[data-baseweb="popover"] > div > div {
     background-color: #ffffff !important; /* Fundo do dropdown em branco */
     color: #000000 !important; /* Texto do dropdown em preto */
 }
-/* Estilo para as opções do selectbox */
+/* Estilo para as opções individuais do selectbox */
 .stSelectbox .option {
     color: #000000 !important; /* Garante que o texto das opções seja preto */
 }
@@ -76,17 +77,18 @@ div[data-baseweb="popover"] > div > div {
 }
 
 /* Força exibição dos textos Sim / Não e ajusta cor */
-.stRadio div[role="radiogroup"] > div {
-    display: flex !important;
-    align-items: center !important;
-    gap: 6px;
-}
-.stRadio div[role="radiogroup"] label span {
+/* Mais específico para o span que contém o texto */
+.stRadio div[role="radiogroup"] > label > div > div > span {
     visibility: visible !important;
     opacity: 1 !important;
-    display: inline !important;
     color: #000000 !important; /* Texto "Sim" / "Não" em preto */
     font-weight: 500;
+    display: inline !important; /* Garante que o texto apareça inline */
+}
+
+/* Garante que o span direto que pode ter o texto também seja visível */
+.stRadio span {
+    color: #000000 !important;
 }
 
 /* === Botão primário (Calcular) === */
