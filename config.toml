@@ -1,2 +1,12 @@
 [theme]
 base = "light"
+
+[server]
+enableStaticServing = true
+
+[theme]
+base="light"
+primaryColor="#d33636"
+backgroundColor="#ffffff"
+secondaryBackgroundColor="#f0f2f6"
+textColor="#000000"
