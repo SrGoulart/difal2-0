@@ -1,145 +1,28 @@
-/* === Base === */
-body, .stApp {
-    background-color: #ffffff;
-    color: #000000;
-    font-family: 'Arial', sans-serif;
+/* Fundo e texto dos inputs */
+input, .stNumberInput input, select, textarea {
+    background-color: white !important;
+    color: black !important;
 }
 
-/* === Títulos === */
-h1, h2, h3, h4, label {
-    color: #0d134c !important;
+/* Labels e botões de opção */
+.css-1cpxqw2, .css-1oy0v0j, label {
+    color: black !important;
 }
 
-/* === Formulário (container) === */
-.form-container {
-    max-width: 700px; /* Largura reduzida para o formulário */
-    margin: 2rem auto; /* Centraliza o formulário */
-    background-color: #f7f9fc;
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-}
-
-/* === Inputs (text, number, etc.) === */
-input, select, textarea {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    border: 1px solid #ccc !important;
-    border-radius: 8px !important;
-    padding: 0.5rem !important;
-}
-
-/* === Remove spinners dos number inputs === */
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-input[type=number] {
-    -moz-appearance: textfield;
-}
-
-/* === Selectbox (estado) === */
-/* Estilo para o contêiner principal do selectbox */
-div[data-baseweb="select"] > div {
-    background-color: #ffffff !important; /* Fundo claro para o campo selecionado */
-    border-radius: 8px !important;
-    border: 1px solid #ccc !important;
-}
-/* Garante que o texto dentro do selectbox seja sempre preto */
-div[data-baseweb="select"] * {
-    color: #000000 !important;
-}
-/* Estilo para a caixa de seleção quando aberta/focada (o popover) */
-div[data-baseweb="popover"] > div > div {
-    background-color: #ffffff !important; /* Fundo do dropdown em branco */
-    color: #000000 !important; /* Texto do dropdown em preto */
-}
-/* Estilo para as opções individuais do selectbox */
-.stSelectbox .option {
-    color: #000000 !important; /* Garante que o texto das opções seja preto */
-}
-
-
-/* === Radio buttons === */
-.stRadio > label, .stRadio label {
-    color: #0d134c !important; /* Cor do título do rádio */
-    font-weight: 600;
-}
-.stRadio div[role="radiogroup"] {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-}
-.stRadio div[role="radiogroup"] label {
-    background: none !important;
-    padding-left: 4px;
-}
-
-/* Força exibição dos textos Sim / Não e ajusta cor */
-/* Mais específico para o span que contém o texto */
-.stRadio div[role="radiogroup"] > label > div > div > span {
-    visibility: visible !important;
-    opacity: 1 !important;
-    color: #000000 !important; /* Texto "Sim" / "Não" em preto */
-    font-weight: 500;
-    display: inline !important; /* Garante que o texto apareça inline */
-}
-
-/* Garante que o span direto que pode ter o texto também seja visível */
-.stRadio span {
-    color: #000000 !important;
-}
-
-/* === Botão primário (Calcular) === */
-button[data-testid="baseButton-primary"] {
-    background-color: #0d134c !important; /* Fundo escuro */
-    color: #ffffff !important; /* Texto branco */
-    border: 2px solid #0d134c !important;
-    border-radius: 8px !important;
+/* Mensagem de sucesso */
+.success-message {
+    color: #1e1e1e !important;
     font-weight: bold;
-    transition: 0.2s ease-in-out;
-}
-button[data-testid="baseButton-primary"]:hover {
-    background-color: #17217a !important; /* Levemente mais escuro no hover */
-    transform: scale(1.01);
 }
 
-/* === Resultado (após cálculo) === */
-.result-container {
-    max-width: 600px; /* Largura reduzida para a caixa de resultados */
-    margin: 2rem auto; /* Centraliza a caixa de resultados */
-    background-color: #f1f5fb;
-    padding: 1.5rem;
-    border-radius: 12px;
-    color: #0d134c;
-    font-weight: 500;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+/* Remove botões +/- dos number_input */
+.css-1gk2b6a button {
+    display: none !important;
 }
 
-/* === Ajustes Responsivos === */
-@media (max-width: 768px) {
-    /* Ajusta largura do formulário e resultado em telas menores */
-    .form-container, .result-container {
-        max-width: 95% !important;
-        padding: 1rem;
-    }
-    /* Empilha colunas em telas menores */
-    div[data-testid="stForm"] > div > div {
-        flex-direction: column;
-    }
-    /* Empilha botões de rádio em telas menores */
-    .stRadio div[role="radiogroup"] {
-        flex-direction: column;
-    }
-    /* Ajusta tamanho da logo em telas menores */
-    img[width="200"] {
-        width: 150px !important;
-    }
-    h1 {
-        font-size: 2rem !important; /* Reduz tamanho do título principal */
-    }
-    h4 {
-        font-size: 1rem !important; /* Reduz tamanho do subtítulo */
-    }
+/* Remove barra ou alertas coloridos */
+div[role="alert"], .stAlert {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 }
