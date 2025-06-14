@@ -18,20 +18,9 @@ st.set_page_config(
 )
 
 # Estilos CSS gerais para o corpo e cabeçalho
-st.markdown("""
-    <style>
-        body, .stApp {
-            background-color: white !important;
-            color: black !important;
-        }
-        [data-testid="stHeader"] {
-            background: white;
-        }
-        [data-testid="stToolbar"] {
-            visibility: hidden;
-        }
-    </style>
-""", unsafe_allow_html=True)
+with open("style.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
 
 
 # Função para obter a logo em base64
