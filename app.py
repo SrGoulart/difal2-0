@@ -155,10 +155,6 @@ st.markdown("</div>", unsafe_allow_html=True)
 if submit:
     resultado = calcular_difal(valor_produto_df, valor_produto_fora, frete_df, frete_ou, estado_origem, importado)
     
-  # Dentro da função onde está o botão ou lógica de cálculo
-if botao_calcular:
-    resultado = calcular_difal(...)  # Exemplo: ajuste com sua função
-
     if 'Erro' in resultado:
         st.error(resultado['Erro'])
     else:
