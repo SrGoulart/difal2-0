@@ -161,9 +161,8 @@ if submit:
        st.markdown('<p class="success-message">Simulação concluída com sucesso.</p>', unsafe_allow_html=True)
 
         # Centraliza e estiliza a caixa de resultados
-        if resultado:
-    st.markdown('<p class="success-message">Simulação concluída com sucesso.</p>', unsafe_allow_html=True)
-
+        
+        st.markdown('<p class="success-message">Simulação concluída com sucesso.</p>', unsafe_allow_html=True)
         st.markdown(f"<h4 style='color:{COR_SECUNDARIA}; text-align: center;'>Resultado da Simulação</h4>", unsafe_allow_html=True)
         for chave, valor in resultado.items():
             st.markdown(f"<p style='color:{COR_PRIMARIA}; font-size: 16px; text-align: center; margin-bottom: 0.5rem;'><strong>{chave}:</strong> {valor}</p>", unsafe_allow_html=True)
