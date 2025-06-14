@@ -158,7 +158,8 @@ if submit:
     if 'Erro' in resultado:
         st.error(resultado['Erro'])
     else:
-        st.success("Simulação concluída com sucesso.")
+       st.markdown('<p class="success-message">Simulação concluída com sucesso.</p>', unsafe_allow_html=True)
+
         # Centraliza e estiliza a caixa de resultados
         st.markdown("<div class='result-container'>", unsafe_allow_html=True)
         st.markdown(f"<h4 style='color:{COR_SECUNDARIA}; text-align: center;'>Resultado da Simulação</h4>", unsafe_allow_html=True)
