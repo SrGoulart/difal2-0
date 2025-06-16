@@ -13,7 +13,6 @@ COR_DESTAQUE = "#8ff8e0"
 st.set_page_config(
     page_title="Simulador DIFAL - GRAN",
     page_icon="💼",
-    layout="wide",
     initial_sidebar_state="collapsed"
 )
 
