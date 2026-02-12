@@ -1,168 +1,250 @@
-import pandas as pd
 import streamlit as st
-from PIL import Image
-import base64
+import pandas as pd
 
-# Cores da marca
-COR_PRIMARIA = "#0d134c"
-COR_SECUNDARIA = "#dd303e"
-COR_CLARA = "#ffffff"
-COR_DESTAQUE = "#8ff8e0"
+# =========================
+# CONFIGURAÇÃO DA PÁGINA
+# =========================
 
-# Configuração da página Streamlit
 st.set_page_config(
-    page_title="Simulador DIFAL - GRAN",
-    page_icon="💼",
-    initial_sidebar_state="collapsed"
+    page_title="Simulador DIFAL - Vendas DF",
+    page_icon="📊",
+    layout="centered"
 )
 
-# Estilos CSS gerais para o corpo e cabeçalho
-with open("style.css") as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+# =========================
+# CORES
+# =========================
+
+COR_PRIMARIA = "#0d134c"
+COR_SECUNDARIA = "#dd303e"
 
 
+# =========================
+# ESTILO
+# =========================
 
-# Função para obter a logo em base64
-def get_logo_base64(path):
-    """
-    Carrega uma imagem do caminho especificado e a codifica em base64.
-    Retorna uma string base64 da imagem.
-    """
-    try:
-        with open(path, "rb") as image_file:
-            return base64.b64encode(image_file.read()).decode()
-    except FileNotFoundError:
-        st.error(f"Erro: Arquivo da logo '{path}' não encontrado. Certifique-se de que está no mesmo diretório.")
-        return "" # Retorna uma string vazia em caso de erro
+st.markdown(
+    f"""
+    <style>
+        h1 {{
+            color: {COR_PRIMARIA};
+            text-align: center;
+        }}
 
-# Carrega a logo
-# Certifique-se de que 'GRAN_colorido_(1).png' está no mesmo diretório que 'app.py'
-logo_base64 = get_logo_base64("GRAN_colorido_(1).png")
+        .box {{
+            background-color: #f7f9fc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }}
 
-# Layout do cabeçalho com título e logo
-st.markdown(f'''
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; padding-bottom: 1rem;">
-        <div style="text-align: left; flex-grow: 1;">
-            <h1 style="color:{COR_PRIMARIA}; margin-bottom: 0; font-size: 2.5rem;">Simulador de DIFAL</h1>
-            <h4 style="color:{COR_SECUNDARIA}; margin-top: 0; font-size: 1.2rem;">GRAN - Simulação Comparativa de Custos</h4>
-        </div>
-        <div style="flex-shrink: 0;">
-            <img src="data:image/png;base64,{logo_base64}" width="200" style="max-width: 100%; height: auto;">
-        </div>
-    </div>
-    <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(13, 19, 76, 0), rgba(13, 19, 76, 0.75), rgba(13, 19, 76, 0));">
-''', unsafe_allow_html=True)
+        .resultado {{
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
-# Aplica CSS customizado do arquivo style.css
-with open("style.css") as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+# =========================
+# TABELAS FISCAIS
+# =========================
 
-# Função para obter alíquotas interestaduais
-def get_estado_aliquotas():
-    """
-    Retorna um DataFrame com os estados brasileiros e suas alíquotas interestaduais.
-    """
+def get_aliquotas_interestadual():
+
     estados = [
-        'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS',
-        'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC',
-        'SP', 'SE', 'TO'
+        'AC','AL','AP','AM','BA','CE','DF','ES','GO','MA',
+        'MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN',
+        'RS','RO','RR','SC','SP','SE','TO'
     ]
-    estados_7 = ['MG', 'PR', 'RS', 'RJ', 'SC', 'SP'] # Estados com alíquota de 7%
-    aliquotas = [7 if estado in estados_7 else 12 for estado in estados]
+
+    estados_7 = ['MG','PR','RS','RJ','SC','SP']
+
+    aliquotas = [
+        7 if estado in estados_7 else 12
+        for estado in estados
+    ]
+
     return pd.DataFrame({
-        'Estado': estados,
-        'AliquotaInterestadual': aliquotas
+        "Estado": estados,
+        "Aliquota": aliquotas
     })
 
-# Função principal para calcular o DIFAL
-def calcular_difal(valor_produto_df, valor_produto_fora, frete_df, frete_ou, estado_origem, importado):
-    """
-    Calcula o DIFAL (Diferencial de Alíquotas) e compara os custos de compra.
 
-    Args:
-        valor_produto_df (float): Valor do produto se comprado no DF.
-        valor_produto_fora (float): Valor do produto se comprado fora do DF.
-        frete_df (float): Custo do frete se comprado no DF.
-        frete_ou (float): Custo do frete se comprado de outro estado.
-        estado_origem (str): Sigla do estado de origem da compra.
-        importado (bool): Indica se o produto é importado.
-
-    Returns:
-        dict: Um dicionário com os resultados do cálculo ou uma mensagem de erro.
-    """
-    aliquotas = get_estado_aliquotas()
-    
-    # Define a alíquota de origem
-    try:
-        aliq_origem = 4 if importado else aliquotas.loc[aliquotas['Estado'] == estado_origem, 'AliquotaInterestadual'].values[0]
-    except IndexError:
-        return {'Erro': f"Estado '{estado_origem}' não encontrado na tabela de alíquotas."}
-
-    aliq_destino = 20 # Alíquota interna do DF
-    base_calculo_fora = valor_produto_fora
-    
-    # Cálculo do DIFAL
-    difal = base_calculo_fora * ((aliq_destino - aliq_origem) / 100)
-    
-    # Custos totais
-    total_df = valor_produto_df + frete_df
-    total_outro_estado = valor_produto_fora + frete_ou + difal
-    
-    # Comparativo e diferença
-    comparativo = 'Compra no DF é mais vantajosa' if total_df < total_outro_estado else 'Compra em outro estado é mais vantajosa'
-    diferenca = abs(total_df - total_outro_estado)
+def get_aliquotas_internas():
 
     return {
-        'Aliquota Estado de Origem (%)': aliq_origem,
-        'Aliquota DF (%)': aliq_destino,
-        'Aliquota Difal (%)': aliq_destino - aliq_origem,
-        'DIFAL (R$)': round(difal, 2),
-        'Total Compra no DF (R$)': round(total_df, 2),
-        'Total Compra Outro Estado (R$)': round(total_outro_estado, 2),
-        'Comparativo': comparativo,
-        'Diferença de Custo (R$)': round(diferenca, 2)
+        "AC":19,"AL":19,"AP":18,"AM":20,"BA":20.5,"CE":18,
+        "DF":20,"ES":17,"GO":19,"MA":22,"MT":17,"MS":17,
+        "MG":18,"PA":19,"PB":18,"PR":19,"PE":20.5,"PI":18,
+        "RJ":20,"RN":18,"RS":17,"RO":17.5,"RR":17,"SC":17,
+        "SP":18,"SE":18,"TO":18
     }
 
-# Seção do formulário de simulação
-# Centraliza o formulário usando uma div com classe CSS
-st.markdown("<div class='form-container'>", unsafe_allow_html=True)
-with st.form("form_difal"):
-    st.markdown(f"<h4 style='color:{COR_PRIMARIA}; text-align: center;'>Informações da Simulação</h4>", unsafe_allow_html=True)
-    
-    # Cria duas colunas para os campos de entrada
+
+# =========================
+# MOTOR DE CÁLCULO
+# =========================
+
+def calcular_difal_venda(
+    valor_produto,
+    frete,
+    estado_destino,
+    importado,
+    consumidor_final
+):
+
+    base = valor_produto + frete
+
+    aliquotas_inter = get_aliquotas_interestadual()
+    internas = get_aliquotas_internas()
+
+    # Interestadual
+    if importado:
+        aliq_inter = 4
+    else:
+        aliq_inter = aliquotas_inter.loc[
+            aliquotas_inter["Estado"] == estado_destino,
+            "Aliquota"
+        ].values[0]
+
+    # Interna
+    aliq_interna = internas.get(estado_destino)
+
+    if not aliq_interna:
+        return {"Erro": "Estado inválido."}
+
+    # ICMS Origem
+    icms_origem = base * (aliq_inter / 100)
+
+    difal = 0
+    icms_destino = 0
+
+    # DIFAL só se consumidor final não contribuinte
+    if consumidor_final:
+
+        difal = base * ((aliq_interna - aliq_inter) / 100)
+        icms_destino = difal
+
+    total_icms = icms_origem + icms_destino
+
+    return {
+
+        "Base de Cálculo (R$)": round(base,2),
+
+        "Alíquota Interestadual (%)": aliq_inter,
+
+        "Alíquota Interna Destino (%)": aliq_interna,
+
+        "ICMS Origem - DF (R$)": round(icms_origem,2),
+
+        "DIFAL Destino (R$)": round(difal,2),
+
+        "Total ICMS (R$)": round(total_icms,2)
+    }
+
+
+# =========================
+# INTERFACE
+# =========================
+
+st.markdown("<h1>Simulador DIFAL - Vendas DF</h1>", unsafe_allow_html=True)
+
+
+st.markdown(
+    "<div class='box'>",
+    unsafe_allow_html=True
+)
+
+
+with st.form("form_simulador"):
+
+    st.subheader("📌 Dados da Venda")
+
     col1, col2 = st.columns(2)
 
     with col1:
-        # Campos de entrada de valores para compra no DF (sem botões de +/-)
-        valor_produto_df = st.number_input("Valor do Produto DF (R$)", min_value=0.0, step=0.01, format="%.2f", label_visibility="visible")
-        frete_df = st.number_input("Frete - Compra no DF (R$)", min_value=0.0, step=0.01, format="%.2f", label_visibility="visible")
-        # Campo de rádio para produto importado (opções horizontais)
-        importado = st.radio("Produto Importado?", options=[False, True], format_func=lambda x: "Sim" if x else "Não", horizontal=True)
+
+        valor_produto = st.number_input(
+            "Valor da Venda (R$)",
+            min_value=0.0,
+            step=0.01,
+            format="%.2f"
+        )
+
+        frete = st.number_input(
+            "Frete (R$)",
+            min_value=0.0,
+            step=0.01,
+            format="%.2f"
+        )
+
 
     with col2:
-        # Campos de entrada de valores para compra fora do DF (sem botões de +/-)
-        valor_produto_fora = st.number_input("Valor do Produto fora do DF (R$)", min_value=0.0, step=0.01, format="%.2f", label_visibility="visible")
-        frete_ou = st.number_input("Frete - Compra de Outro Estado (R$)", min_value=0.0, step=0.01, format="%.2f", label_visibility="visible")
-        # Selectbox para o estado de origem
-        estado_origem = st.selectbox("Estado de Origem da Compra", get_estado_aliquotas()['Estado'])
 
-    # Botão de submissão do formulário
-    submit = st.form_submit_button("Calcular", use_container_width=True, type="primary")
+        estado_destino = st.selectbox(
+            "Estado de Destino",
+            get_aliquotas_interestadual()["Estado"]
+        )
+
+        importado = st.radio(
+            "Produto Importado?",
+            [False, True],
+            format_func=lambda x: "Sim" if x else "Não",
+            horizontal=True
+        )
+
+        consumidor_final = st.radio(
+            "Consumidor Final Não Contribuinte?",
+            [True, False],
+            format_func=lambda x: "Sim" if x else "Não",
+            horizontal=True
+        )
+
+
+    calcular = st.form_submit_button(
+        "Calcular DIFAL",
+        use_container_width=True
+    )
+
+
 st.markdown("</div>", unsafe_allow_html=True)
 
-# Seção de resultados
-if submit:
-    resultado = calcular_difal(valor_produto_df, valor_produto_fora, frete_df, frete_ou, estado_origem, importado)
-    
-    if 'Erro' in resultado:
-        st.error(resultado['Erro'])
+
+# =========================
+# RESULTADO
+# =========================
+
+if calcular:
+
+    resultado = calcular_difal_venda(
+        valor_produto,
+        frete,
+        estado_destino,
+        importado,
+        consumidor_final
+    )
+
+    if "Erro" in resultado:
+
+        st.error(resultado["Erro"])
+
     else:
-        st.markdown('<p class="success-message">Simulação concluída com sucesso.</p>', unsafe_allow_html=True)
 
-        # Centraliza e estiliza a caixa de resultados
-        st.markdown(f"<h4 style='color:{COR_SECUNDARIA}; text-align: center;'>Resultado da Simulação</h4>", unsafe_allow_html=True)
-        for chave, valor in resultado.items():
-            st.markdown(f"<p style='color:{COR_PRIMARIA}; font-size: 16px; text-align: center; margin-bottom: 0.5rem;'><strong>{chave}:</strong> {valor}</p>", unsafe_allow_html=True)
+        st.success("Simulação concluída")
+
+        st.markdown(
+            "<div class='resultado'>",
+            unsafe_allow_html=True
+        )
+
+        st.subheader("📊 Resultado")
+
+        for k, v in resultado.items():
+
+            st.write(f"**{k}:** {v}")
+
         st.markdown("</div>", unsafe_allow_html=True)
-
-
